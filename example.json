@@ -1,39 +1,123 @@
 {
-  "advisory": {
-    "id": "DEMO-2026-001",
-    "vendor": "Example Vendor",
-    "product": "Example Gateway",
-    "affected_versions": [
-      "2.4.0",
-      "2.4.1"
-    ],
-    "source": "https://example.org/advisories/DEMO-2026-001",
-    "exploitation": "unknown"
-  },
-  "inventory": {
-    "scope": "Fictional training lab snapshot",
-    "assets": [
-      {
-        "id": "lab-gateway",
-        "vendor": "Example Vendor",
-        "product": "Example Gateway",
-        "version": "2.4.1",
-        "exposure": "internet"
-      },
-      {
-        "id": "lab-worker",
-        "vendor": "Example Vendor",
-        "product": "Example Gateway",
-        "version": null,
-        "exposure": "internal"
-      },
-      {
-        "id": "lab-updated",
-        "vendor": "Example Vendor",
-        "product": "Example Gateway",
-        "version": "2.5.0",
-        "exposure": "internal"
-      }
-    ]
-  }
+  "scope": "Fictional one-day labeled sample",
+  "minimum_reviewed": 20,
+  "rules": [
+    {
+      "id": "rule-1",
+      "name": "Unusual administrative sign-in",
+      "coverage": "healthy"
+    },
+    {
+      "id": "rule-2",
+      "name": "Endpoint event gap",
+      "coverage": "unknown"
+    }
+  ],
+  "labels": [
+    {
+      "alert_id": "sample-1",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-2",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-3",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-4",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-5",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-6",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-7",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-8",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-9",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-10",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-11",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-12",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-13",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-14",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-15",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-16",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-17",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-18",
+      "rule_id": "rule-1",
+      "disposition": "false_positive"
+    },
+    {
+      "alert_id": "sample-19",
+      "rule_id": "rule-1",
+      "disposition": "true_positive"
+    },
+    {
+      "alert_id": "sample-20",
+      "rule_id": "rule-1",
+      "disposition": "true_positive"
+    },
+    {
+      "alert_id": "sample-21",
+      "rule_id": "rule-1",
+      "disposition": "unknown"
+    }
+  ]
 }

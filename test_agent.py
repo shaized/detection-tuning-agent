@@ -10,35 +10,38 @@ class AgentTests(unittest.TestCase):
     def setUp(self):
         self.data = json.loads(Path(__file__).with_name("example.json").read_text())
 
-    def test_example_retains_three_distinct_applicability_states(self):
-        result = analyze(self.data)
-        self.assertEqual(result["summary"]["affected_version_matches"], 1)
+    def test_unknown_labels_are_not_counted_as_benign(self):
+        row = analyze(self.data)["findings"][0]
+        self.assertEqual(row["reviewed"], 20)
+        self.assertEqual(row["unknown"], 1)
+        self.assertEqual(row["false_positive_fraction_of_reviewed"], 0.9)
+
+    def test_degraded_coverage_prevents_noise_recommendation(self):
+        self.data["rules"][0]["coverage"] = "degraded"
         self.assertEqual(
-            [row["status"] for row in result["findings"]],
-            ["affected_version_match", "version_unknown", "version_not_listed"],
+            analyze(self.data)["findings"][0]["recommendation"],
+            "validate_log_coverage_first",
         )
 
-    def test_vendor_and_product_case_does_not_hide_a_candidate(self):
-        self.data["inventory"]["assets"][0]["vendor"] = " example vendor "
-        self.assertEqual(analyze(self.data)["summary"]["affected_version_matches"], 1)
+    def test_small_samples_require_more_labels(self):
+        self.data["labels"] = self.data["labels"][:2]
+        self.assertEqual(
+            analyze(self.data)["findings"][0]["recommendation"], "collect_more_labels"
+        )
 
-    def test_empty_inventory_does_not_assert_safety(self):
-        self.data["inventory"]["assets"] = []
-        self.assertEqual(analyze(self.data)["summary"]["assessment"], "inconclusive")
+    def test_empty_labels_have_no_fraction(self):
+        self.data["labels"] = []
+        self.assertIsNone(
+            analyze(self.data)["findings"][0]["false_positive_fraction_of_reviewed"]
+        )
 
-    def test_missing_version_is_not_interpreted_as_patched(self):
-        self.data["inventory"]["assets"][0]["version"] = None
-        self.assertEqual(analyze(self.data)["findings"][0]["status"], "version_unknown")
-
-    def test_empty_affected_versions_is_rejected(self):
-        self.data["advisory"]["affected_versions"] = []
+    def test_unknown_rule_id_is_rejected(self):
+        self.data["labels"][0]["rule_id"] = "missing"
         with self.assertRaises(ValueError):
             analyze(self.data)
 
-    def test_duplicate_asset_ids_are_rejected(self):
-        self.data["inventory"]["assets"].append(
-            copy.deepcopy(self.data["inventory"]["assets"][0])
-        )
+    def test_duplicate_labels_do_not_inflate_sample(self):
+        self.data["labels"].append(copy.deepcopy(self.data["labels"][0]))
         with self.assertRaises(ValueError):
             analyze(self.data)
 

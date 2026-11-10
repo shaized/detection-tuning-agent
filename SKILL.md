@@ -1,18 +1,18 @@
 ---
-name: threat-intel-agent
-description: Model-agnostic threat intelligence skill with a local advisory-to-inventory matching tool and synthetic examples.
+name: detection-tuning-agent
+description: Read-only detection tuning skill with labeled-sample metrics, coverage checks and evidence-based change proposals.
 ---
 
-# Threat Intelligence Agent
+# Detection Tuning Agent
 
-Turn an advisory into an evidence-backed exposure review.
+Review noisy rules while preserving detection coverage.
 
 ## Workflow
 
-1. Identify the advisory, affected product, source dates and the assessment scope. Prefer primary vendor advisories and authoritative exploitation evidence.
-2. Compare the advisory with the supplied asset inventory using agent.py. The helper accepts exact versions only; manually resolve version ranges, packaging and backports with evidence.
-3. Assess runtime presence, configuration, exposure, required attacker access and controls separately. Record what is measured and what is inferred.
-4. Return an exposure assessment with evidence references, missing coverage, confidence reasoning and specific next steps. A version match establishes a candidate, not compromise.
+1. Read the complete rule definition and establish intent, field semantics, schedule, aggregation, threshold and lookback. Do not infer intent only from its title.
+2. Check whether the necessary logs and fields are present. Use agent.py to summarize a scoped, labeled alert sample; distinguish reviewed outcomes from unknowns.
+3. Inspect representative true positives and false positives. Identify the narrow predicate responsible for noise and the malicious behavior that a proposed change could hide.
+4. Produce a reviewable proposal with evidence, expected benefit, detection-loss risk, replay cases and rollback. Do not modify, disable or suppress the live rule.
 
 ## Local evidence tool
 

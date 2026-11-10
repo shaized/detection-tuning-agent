@@ -2,7 +2,7 @@
 
 ## Input
 
-The root has advisory and inventory objects. advisory requires id, vendor, product, affected_versions (a nonempty list of exact version strings), source and exploitation (observed, not_reported or unknown). inventory requires scope and assets. Each asset requires a unique id, vendor, product, version (string or null), and exposure (internet, internal or unknown). Vendor/product matching ignores case and surrounding whitespace; version matching is exact. An unlisted version is unresolved, not safe.
+The root requires scope, rules and labels. minimum_reviewed is a positive integer (default 20). Rules have unique id, name and coverage (healthy/degraded/unknown). Labels have unique alert_id, rule_id and disposition (true_positive/false_positive/unknown). The false-positive fraction divides false positives by reviewed labels only. The 80% suggestion threshold is an example heuristic, not a statistically validated tuning policy.
 
 See [example.json](example.json) for a complete fictional input. All demo identities, indicators, events, products and reputation providers are synthetic. Documentation IPs and example domains are not threat intelligence.
 
@@ -16,6 +16,6 @@ JSON preserves evidence text. Markdown renders evidence as literal escaped text,
 
 ## Example interpretation
 
-One affected-version candidate, one unknown version and one version not listed in the advisory. Overall exposure remains subject to verification.
+The first rule has 18 false positives among 20 reviewed alerts, plus one unresolved label. The second needs coverage validation before tuning.
 
-Vendor advisories and package maintainers should be the primary source for affected ranges; the demo advisory is fictional.
+A replay should include malicious and benign cases. The fraction of reviewed alerts is not a population false-positive rate and does not measure recall.
